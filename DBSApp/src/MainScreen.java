@@ -31,7 +31,6 @@ public class MainScreen extends javax.swing.JFrame {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-					int a = 5;
 				}
 			}
 		});
