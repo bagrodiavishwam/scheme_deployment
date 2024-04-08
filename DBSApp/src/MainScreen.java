@@ -1,6 +1,5 @@
 import java.awt.EventQueue;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -32,6 +31,7 @@ public class MainScreen extends javax.swing.JFrame {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					int a = 5;
 				}
 			}
 		});
@@ -54,13 +54,13 @@ public class MainScreen extends javax.swing.JFrame {
 		frame.setBounds(0, 0, 1470, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		panel.setBounds(51, 146, 1356, 93);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		JButton btnNewButton = new JButton("Scheme 1");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,13 +70,13 @@ public class MainScreen extends javax.swing.JFrame {
 		});
 		btnNewButton.setBounds(596, 25, 211, 43);
 		panel.add(btnNewButton);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		panel_1.setBounds(51, 236, 1356, 93);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
-		
+
 		JButton btnNewButton_1 = new JButton("Scheme 2");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,13 +86,13 @@ public class MainScreen extends javax.swing.JFrame {
 		});
 		btnNewButton_1.setBounds(596, 23, 211, 43);
 		panel_1.add(btnNewButton_1);
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		panel_2.setBounds(51, 326, 1356, 93);
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
-		
+
 		JButton btnNewButton_2 = new JButton("Scheme 3");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,12 +102,12 @@ public class MainScreen extends javax.swing.JFrame {
 		});
 		btnNewButton_2.setBounds(596, 30, 211, 43);
 		panel_2.add(btnNewButton_2);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setBounds(225, 28, 998, 66);
 		frame.getContentPane().add(panel_3);
 		panel_3.setLayout(null);
-		
+
 		txtWelcomeToThe = new JTextField();
 		txtWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		txtWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -117,5 +117,5 @@ public class MainScreen extends javax.swing.JFrame {
 		txtWelcomeToThe.setColumns(10);
 		txtWelcomeToThe.setEditable(false);
 	}
-	
+
 }
