@@ -110,7 +110,7 @@ public class MainScreen extends javax.swing.JFrame {
 		txtWelcomeToThe = new JTextField();
 		txtWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		txtWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
-		txtWelcomeToThe.setText("Welcome to the Scheme Deployment Portal!");
+		txtWelcomeToThe.setText("Welcome to the Scheme Deployment Portal!!");
 		txtWelcomeToThe.setBounds(172, 10, 707, 46);
 		panel_3.add(txtWelcomeToThe);
 		txtWelcomeToThe.setColumns(10);
