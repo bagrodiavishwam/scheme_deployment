@@ -5,14 +5,14 @@ public class MySQLConnection {
 	{
 		try 
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbs_project", "root", "root@123");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheme_dep", "root", "root@123");
 			JOptionPane.showMessageDialog(null, "Connection made!");
 			return con;
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Connection error!");
+			JOptionPane.showMessageDialog(null, "Error in establishing connection!");
 			return null;
 		}
 	  }
