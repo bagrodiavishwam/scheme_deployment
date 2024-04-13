@@ -1,12 +1,18 @@
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -21,10 +27,46 @@ public class Scheme1 {
 	private JTextField txtScheme;
 	private JTextField txtStatistics;
 	private JTable table;
+	
+	Connection con = null;
+	PreparedStatement pst = null;
+	ResultSet rs = null;
+	
+	DefaultTableModel model = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
 	 */
+	
+	public void updateTable() {
+		
+		con = MySQLConnection.connectDB();
+		
+		if(con != null) 
+		{
+			String sql = "SELECT is_availing.aadhar_id, name, start_date, end_date FROM is_availing JOIN citizen ON is_availing.aadhar_id = citizen.aadhar_id WHERE scheme_id = 1";
+		
+			try {
+				pst = con.prepareStatement(sql);
+				rs = pst.executeQuery();
+				Object[] columnData = new Object[4];
+				
+				model.setRowCount(0);
+				while(rs.next())
+				{
+					columnData[0] = rs.getString("aadhar_id");
+					columnData[1] = rs.getString("name");
+					columnData[2] = rs.getString("start_date");
+					columnData[3] = rs.getString("end_date");
+					
+					model.addRow(columnData);
+				}
+			}
+			catch(Exception e) {
+				JOptionPane.showMessageDialog(null, "Error in updating table");
+			}
+		}
+	}
 	public static void Scheme1Screen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,6 +85,12 @@ public class Scheme1 {
 	 */
 	public Scheme1() {
 		initialize();
+		
+		Object col[] = {"aadar_id", "name", "start_date", "end_date"};
+		model.setColumnIdentifiers(col);
+		table.setModel(model);
+		
+		updateTable();
 	}
 
 	/**
@@ -98,6 +146,15 @@ public class Scheme1 {
 		));
 		scrollPane.setViewportView(table);
 		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTable();
+			}
+		});
+		btnRefresh.setBounds(1040, 114, 85, 21);
+		frame.getContentPane().add(btnRefresh);
+		
 		JButton btnNewButton = new JButton("Create");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,8 +180,43 @@ public class Scheme1 {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DeleteSchemeEntry dse = new DeleteSchemeEntry();
-				dse.DeleteSchemeEntry();
+//				DeleteSchemeEntry dse = new DeleteSchemeEntry();
+//				dse.DeleteSchemeEntry();
+				DefaultTableModel mod = (DefaultTableModel)table.getModel();
+				
+				con = MySQLConnection.connectDB();
+				int row = table.getSelectedRow();
+				String aadhar = new String();
+				String startDate = new String();
+				if(table.getSelectedRow() == -1)
+				{
+					if(table.getSelectedRow() == 0)
+					{
+						JOptionPane.showMessageDialog(null, "No data to be deleted", "Scheme 1", JOptionPane.OK_OPTION);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Select row to be deleted", "Scheme 1", JOptionPane.OK_OPTION);
+					}
+				}
+				else
+				{
+					aadhar = table.getModel().getValueAt(row,0).toString();
+					startDate = table.getModel().getValueAt(row,2).toString();
+					mod.removeRow(table.getSelectedRow());
+				}
+				String sql = "DELETE FROM is_availing WHERE aadhar_id = ? AND start_date = ?";
+				try {
+					pst = con.prepareStatement(sql);
+					pst.setString(1, aadhar);
+					pst.setString(2, startDate);
+					pst.execute();
+					pst.close();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1);
+				}
+				
 			}
 		});
 		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 13));

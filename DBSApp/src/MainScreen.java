@@ -20,10 +20,6 @@ public class MainScreen extends javax.swing.JFrame {
 	private JFrame frame;
 	private JTextField txtWelcomeToThe;
 	
-	Connection con = null;
-	PreparedStatement pst = null;
-	ResultSet rs = null;
-	
 
 	/**
 	 * Launch the application.
@@ -46,7 +42,7 @@ public class MainScreen extends javax.swing.JFrame {
 	 */
 	public MainScreen() {
 		initialize();
-		MySQLConnection.connectDB();
+//		MySQLConnection.connectDB();
 	}
 
 	/**
