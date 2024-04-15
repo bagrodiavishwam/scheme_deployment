@@ -120,21 +120,36 @@ public class CreateSchemeEntry {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				int success_flag = 0;
 				con = MySQLConnection.connectDB(); 
 				
-				String sql = "INSERT INTO is_availing(aadhar_id, scheme_id, start_date, end_date) values(?,?,?,?)";
+				String sql = "SELECT * FROM is_eligible";
 				
 				try 
 				{
+					pst = con.prepareStatement(sql);
+					rs = pst.executeQuery();
+					sql = "INSERT INTO is_availing(aadhar_id, scheme_id, start_date, end_date) values(?,?,?,?)";
 					pst = con.prepareStatement(sql);
 					pst.setString(1, textAadhar.getText());
 					pst.setString(2, textScheme.getText());
 					pst.setString(3, ((JTextField)startDate.getDateEditor().getUiComponent()).getText());
 					pst.setString(4, ((JTextField)endDate.getDateEditor().getUiComponent()).getText());
-					
-					pst.execute();
-					pst.close();
-					JOptionPane.showMessageDialog(null, "Data updated, press refresh to view changes");
+					while(rs.next())
+					{
+						if(rs.getString(1).equals(textAadhar.getText()) && rs.getString(2).equals(textScheme.getText()))
+						{
+							pst.execute();
+							success_flag = 1;
+							pst.close();
+							JOptionPane.showMessageDialog(null, "Data updated, press refresh to view changes");
+							break;
+						}
+					}
+					if(success_flag == 0) 
+					{
+						JOptionPane.showMessageDialog(null, "Not Eligible!");
+					}
 				}
 				catch(Exception ev)
 				{

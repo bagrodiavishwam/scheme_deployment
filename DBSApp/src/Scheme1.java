@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -20,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
 
 public class Scheme1 {
 
@@ -33,6 +35,12 @@ public class Scheme1 {
 	ResultSet rs = null;
 	
 	DefaultTableModel model = new DefaultTableModel();
+	private JTextField textSchemeID;
+	private JTextField textBeneficiaryCount;
+	private JTextField textEligibleCount;
+	private JTextField textPenetrationRatio;
+	private JTextField textCostPerCapita;
+	private JTextField textEstimatedCost;
 
 	/**
 	 * Launch the application.
@@ -61,6 +69,7 @@ public class Scheme1 {
 					
 					model.addRow(columnData);
 				}
+				rs.close();
 			}
 			catch(Exception e) {
 				JOptionPane.showMessageDialog(null, "Error in updating table");
@@ -79,6 +88,7 @@ public class Scheme1 {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -86,9 +96,12 @@ public class Scheme1 {
 	public Scheme1() {
 		initialize();
 		
-		Object col[] = {"aadar_id", "name", "start_date", "end_date"};
+		Object col[] = {"aadhar_id", "name", "start_date", "end_date"};
 		model.setColumnIdentifiers(col);
 		table.setModel(model);
+		
+		String scheme_id = "1";
+		EligibilityCriteria.SchemeEligible(con, pst, scheme_id);
 		
 		updateTable();
 	}
@@ -125,6 +138,72 @@ public class Scheme1 {
 		txtStatistics.setBounds(103, 36, 158, 49);
 		panel.add(txtStatistics);
 		txtStatistics.setColumns(10);
+		
+		textSchemeID = new JTextField();
+		textSchemeID.setBounds(165, 117, 177, 35);
+		panel.add(textSchemeID);
+		textSchemeID.setColumns(10);
+		textSchemeID.setText("1");
+		
+		textBeneficiaryCount = new JTextField();
+		textBeneficiaryCount.setColumns(10);
+		textBeneficiaryCount.setBounds(165, 179, 177, 35);
+		panel.add(textBeneficiaryCount);
+		textBeneficiaryCount.setText(SchemeStatistics.count_beneficiaries(con, pst, rs, "1"));
+		
+		textEligibleCount = new JTextField();
+		textEligibleCount.setColumns(10);
+		textEligibleCount.setBounds(165, 242, 177, 35);
+		panel.add(textEligibleCount);
+		textEligibleCount.setText(SchemeStatistics.count_eligible(con, pst, rs, "1"));
+		
+		textPenetrationRatio = new JTextField();
+		textPenetrationRatio.setColumns(10);
+		textPenetrationRatio.setBounds(165, 303, 177, 35);
+		panel.add(textPenetrationRatio);
+		textPenetrationRatio.setText(SchemeStatistics.penetration_rate(con, pst, rs, "1"));
+		
+		textCostPerCapita = new JTextField();
+		textCostPerCapita.setColumns(10);
+		textCostPerCapita.setBounds(165, 369, 177, 35);
+		panel.add(textCostPerCapita);
+		textCostPerCapita.setText("1200");
+		
+		textEstimatedCost = new JTextField();
+		textEstimatedCost.setColumns(10);
+		textEstimatedCost.setBounds(165, 436, 177, 35);
+		panel.add(textEstimatedCost);
+		textEstimatedCost.setText(SchemeStatistics.estimated_cost(con, pst, rs, "1", "1200"));
+		
+		JLabel lblNewLabel = new JLabel("Scheme ID:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(21, 116, 120, 36);
+		panel.add(lblNewLabel);
+		
+		JLabel lblNoOfBeneficiaries = new JLabel("No. of beneficiaries:");
+		lblNoOfBeneficiaries.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNoOfBeneficiaries.setBounds(21, 178, 120, 36);
+		panel.add(lblNoOfBeneficiaries);
+		
+		JLabel lblNoEligible = new JLabel("No. eligible:");
+		lblNoEligible.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNoEligible.setBounds(21, 241, 120, 36);
+		panel.add(lblNoEligible);
+		
+		JLabel lblPenetrationRatio = new JLabel("Penetration ratio:");
+		lblPenetrationRatio.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPenetrationRatio.setBounds(21, 302, 120, 36);
+		panel.add(lblPenetrationRatio);
+		
+		JLabel lblCostPerCapita = new JLabel("Cost per capita:");
+		lblCostPerCapita.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCostPerCapita.setBounds(21, 368, 120, 36);
+		panel.add(lblCostPerCapita);
+		
+		JLabel lblEstimatedCost = new JLabel("Estimated cost:");
+		lblEstimatedCost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblEstimatedCost.setBounds(21, 435, 120, 36);
+		panel.add(lblEstimatedCost);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -235,6 +314,13 @@ public class Scheme1 {
 		frame.getContentPane().add(btnUpdate);
 		
 		JButton btnNewButton_1 = new JButton("Update Statistics");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textBeneficiaryCount.setText(SchemeStatistics.count_beneficiaries(con, pst, rs, "1"));
+				textPenetrationRatio.setText(SchemeStatistics.penetration_rate(con, pst, rs, "1"));
+				textEstimatedCost.setText(SchemeStatistics.estimated_cost(con, pst, rs, "1", "1200"));
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_1.setBounds(52, 703, 137, 33);
 		frame.getContentPane().add(btnNewButton_1);

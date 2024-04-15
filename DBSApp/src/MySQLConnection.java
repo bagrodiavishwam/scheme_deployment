@@ -7,7 +7,7 @@ public class MySQLConnection {
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheme_dep", "root", "root@123");
-			JOptionPane.showMessageDialog(null, "Connection made!");
+//			JOptionPane.showMessageDialog(null, "Connection made!");
 			return con;
 		}
 		catch(Exception e)
