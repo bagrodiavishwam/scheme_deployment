@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 
 import java.awt.EventQueue;
@@ -8,19 +9,30 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.UIManager;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UpdateSchemeEntry {
 
 	private JFrame frame;
 	private JTextField txtCreate;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textAadhar;
+	private JTextField textScheme;
+	private JTextField textStartDate;
+	private JTextField textEndDate;
 	private JButton btnNewButton;
+	
+	Connection con = null;
+	PreparedStatement pst = null;
+	ResultSet rs = null;
 
 	/**
 	 * Launch the application.
@@ -64,11 +76,6 @@ public class UpdateSchemeEntry {
 		txtCreate.setColumns(10);
 		txtCreate.setEditable(false);
 		
-		textField = new JTextField();
-		textField.setBounds(180, 128, 368, 32);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblNewLabel = new JLabel("AADHAR:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(23, 132, 82, 23);
@@ -89,22 +96,48 @@ public class UpdateSchemeEntry {
 		lblEnddate.setBounds(23, 357, 128, 23);
 		frame.getContentPane().add(lblEnddate);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(180, 195, 368, 32);
-		frame.getContentPane().add(textField_1);
+		textAadhar = new JTextField();
+		textAadhar.setBounds(180, 128, 368, 32);
+		frame.getContentPane().add(textAadhar);
+		textAadhar.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(180, 269, 368, 32);
-		frame.getContentPane().add(textField_2);
+		textScheme = new JTextField();
+		textScheme.setColumns(10);
+		textScheme.setBounds(180, 195, 368, 32);
+		frame.getContentPane().add(textScheme);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(180, 348, 368, 32);
-		frame.getContentPane().add(textField_3);
+		textStartDate = new JTextField();
+		textStartDate.setColumns(10);
+		textStartDate.setBounds(180, 269, 368, 32);
+		frame.getContentPane().add(textStartDate);
+		
+		textEndDate = new JTextField();
+		textEndDate.setColumns(10);
+		textEndDate.setBounds(180, 348, 368, 32);
+		frame.getContentPane().add(textEndDate);
 		
 		btnNewButton = new JButton("Submit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				con = MySQLConnection.connectDB();
+				
+				String sql = "UPDATE is_availing SET start_date = ?, end_date = ? WHERE aadhar_id = ? AND scheme_id = ?";
+				
+				try
+				{
+					pst = con.prepareStatement(sql);
+					pst.setString(1, textStartDate.getText());
+					pst.setString(2, textEndDate.getText());
+					pst.setString(3, textAadhar.getText());
+					pst.setString(4, textScheme.getText());
+				}
+				catch(Exception e1)
+				{
+					JOptionPane.showMessageDialog(null, e1);
+				}
+				frame.dispose();
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(440, 458, 108, 32);
 		frame.getContentPane().add(btnNewButton);

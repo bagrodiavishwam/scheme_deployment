@@ -325,14 +325,6 @@ public class Scheme1 {
 		btnNewButton_1.setBounds(52, 703, 137, 33);
 		frame.getContentPane().add(btnNewButton_1);
 		
-//		JButton btnNewButton = new JButton("Close");
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				frame.dispose();
-//			}
-//		});
-//		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//		btnNewButton.setBounds(748, 175, 96, 37);
-//		frame.getContentPane().add(btnNewButton);
+		
 	}
 }

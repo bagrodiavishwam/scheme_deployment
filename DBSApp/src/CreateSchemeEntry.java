@@ -154,7 +154,8 @@ public class CreateSchemeEntry {
 				catch(Exception ev)
 				{
 					JOptionPane.showMessageDialog(null, ev);
-				}	
+				}
+				frame.dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));

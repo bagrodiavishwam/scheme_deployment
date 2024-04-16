@@ -61,11 +61,11 @@ public class MainScreen extends javax.swing.JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JButton btnNewButton = new JButton("Scheme 1");
+		JButton btnNewButton = new JButton("Citizen Portal");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Scheme1 s1 = new Scheme1();
-				s1.Scheme1Screen();
+				CitizenAadhar ca = new CitizenAadhar();
+				ca.CitizenAadhar();
 			}
 		});
 		btnNewButton.setBounds(596, 25, 211, 43);
@@ -77,32 +77,17 @@ public class MainScreen extends javax.swing.JFrame {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
-		JButton btnNewButton_1 = new JButton("Scheme 2");
+		JButton btnNewButton_1 = new JButton("Government Portal");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Scheme2 s2 = new Scheme2();
-				s2.Scheme2Screen();
+				GovernmentID gid = new GovernmentID();
+				gid.GovernmentID();
 			}
 		});
 		btnNewButton_1.setBounds(596, 23, 211, 43);
 		panel_1.add(btnNewButton_1);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new LineBorder(new Color(0, 0, 0), 5));
-		panel_2.setBounds(51, 326, 1356, 93);
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-
-		JButton btnNewButton_2 = new JButton("Scheme 3");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Scheme3 s3 = new Scheme3();
-				s3.Scheme3Screen();
-			}
-		});
-		btnNewButton_2.setBounds(596, 30, 211, 43);
-		panel_2.add(btnNewButton_2);
-
+		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBounds(225, 28, 998, 66);
 		frame.getContentPane().add(panel_3);
